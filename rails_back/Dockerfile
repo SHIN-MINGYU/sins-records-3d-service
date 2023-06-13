@@ -10,6 +10,7 @@ COPY . .
 
 RUN bundle install
 
-# RUN rails db:setup
 
-# CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "8080"]
+CMD ["rm", "-rf", "./tmp/pids/server.pid"]
+
+# RUN rails db:setup

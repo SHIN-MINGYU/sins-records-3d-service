@@ -10,6 +10,3 @@ WORKDIR /vue_front
 
 # COPY package.json .
 COPY . .
-
-# CMD ["yarn"]
-# RUN yarn

@@ -14,21 +14,24 @@ services:
                 volumes:
                         - ./rails_back:/rails_back
                 environment:
-                        MYSQL_USERNAME: root
-                        MYSQL_DATABASE : app
-                        MYSQL_ROOT_PASSWORD : tlsalsrb123
-                        MYSQL_HOST : mysql_db
+                        MYSQL_USERNAME: ${MYSQL_USERNAME}
+                        MYSQL_DATABASE : ${MYSQL_DATABASE}
+                        MYSQL_ROOT_PASSWORD : ${MYSQL_ROOT_PASSWORD}
+                        MYSQL_HOST : ${MYSQL_HOST}
                 container_name: sin_records_api
 
         # # サービス名(folder名)
         mysql_db:
+                build:
+                        context: ./mysql_db
+                        dockerfile: ./Dockerfile
                 volumes: 
                         - ./mysql_db:/var/run/mysqld
-                image: mysql:5.7
+                # image: mysql:5.7
                 command: --innodb_use_native_aio=0
                 environment:
-                        MYSQL_DATABASE: app
-                        MYSQL_ROOT_PASSWORD: tlsalsrb123
+                        MYSQL_DATABASE: ${MYSQL_DATABASE}
+                        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
                 ports:
                         - "3306:3306"
                         
