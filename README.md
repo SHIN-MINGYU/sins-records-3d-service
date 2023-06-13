@@ -5,7 +5,7 @@
 Install my-project with DOCKER
 ```bash
   docker compose build
-  docker compose up mysql_db
+  docker compose run mysql_db
 ```
 Wait until turning on database
 
