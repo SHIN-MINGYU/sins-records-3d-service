@@ -1,30 +1,34 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+<script lang="ts">
+import { ref, onMounted } from "@vue/runtime-core";
+import EnviromentsScene from "./utils/ EnviromentsScene";
+
+export default {
+  name: "BabylonScene",
+  setup() {
+    const bjsCanvas = ref<HTMLCanvasElement | null>(null);
+  
+    onMounted(() => {
+      if (bjsCanvas.value) {
+        const scene = new EnviromentsScene(bjsCanvas.value);
+        scene.createGround();
+      }
+    });
+
+    return {
+      bjsCanvas,
+    };
+  },
+};
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <canvas id="mainCanvas" ref="bjsCanvas" />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+#mainCanvas{
+  height : 100vh;
+  width : 100vw;
+  display : block
 }
 </style>
