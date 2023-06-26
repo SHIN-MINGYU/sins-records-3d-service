@@ -1,6 +1,6 @@
 <script lang="ts">
 import { ref, onMounted } from "@vue/runtime-core";
-import EnviromentsScene from "./utils/ EnviromentsScene";
+import EnviromentsScene from "./utils/scenes/EnviromentsScene";
 
 export default {
   name: "BabylonScene",
@@ -10,6 +10,8 @@ export default {
     onMounted(() => {
       if (bjsCanvas.value) {
         const scene = new EnviromentsScene(bjsCanvas.value);
+        scene.createBall();
+
         scene.createGround();
       }
     });
