@@ -18,9 +18,9 @@ export type IBasicScene = ParentScene | ChildrenScene
 
 
 export function isTypeParentScene(param: IBasicScene): param is ParentScene {
-	return true;
+	return (<ParentScene>param).DOCUMENT_NODE !== undefined;
 }
 
-export function isTypeChildrenScene(param: IBasicScene): param is ChildrenScene {
-	return true;
+export function isTypeChildrenScene(param :  IBasicScene): param is ChildrenScene {
+	return (<ChildrenScene>param).scene !== undefined;
 }
