@@ -12,10 +12,7 @@ export default {
         const scene = new EnviromentsScene(bjsCanvas.value);
         scene.createBall();
         scene.createGround();
-        const characterScene = new CharacterScene(scene);
-        await characterScene.createCharacter();
-        characterScene.attatchCameraToCharacter()
-        characterScene.addMoveEventListener()
+         new CharacterScene(scene);
       }
     }
 
