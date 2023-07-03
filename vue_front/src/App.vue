@@ -1,17 +1,23 @@
 <script lang="ts">
 import { ref, onMounted } from "@vue/runtime-core";
-import EnviromentsScene from "./utils/ EnviromentsScene";
+import EnviromentsScene from "./utils/scenes/EnviromentsScene";
+import CharacterScene from "./utils/scenes/CharacterScene";
 
 export default {
   name: "BabylonScene",
   setup() {
     const bjsCanvas = ref<HTMLCanvasElement | null>(null);
-  
-    onMounted(() => {
+    const bootStrap = async () => {
       if (bjsCanvas.value) {
         const scene = new EnviromentsScene(bjsCanvas.value);
+        scene.createBall();
         scene.createGround();
+         new CharacterScene(scene);
       }
+    }
+
+    onMounted(() => {
+      bootStrap()
     });
 
     return {

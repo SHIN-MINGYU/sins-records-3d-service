@@ -45,7 +45,7 @@ services:
                 ports:
                         - "5173:5173"
                 volumes:
-                        - /vue_front/node_modules
+                        - ./vue_front/node_modules:/vue_front/node_modules
                         - ./vue_front:/vue_front
                 container_name: sin_records_web
 
