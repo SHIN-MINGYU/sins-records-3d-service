@@ -1,4 +1,4 @@
-import { Color4, Vector2, Vector3, Vector4 } from "@babylonjs/core";
+import { Color4,  Vector3, Vector4 } from "@babylonjs/core";
 
 namespace Room {
 	export interface Corners {
@@ -13,7 +13,7 @@ namespace Room {
 	}
 
 	/**
-	 * @description 壁を作る時に使われるオプショナル的なプロパティの集まり
+	 *  壁を作る時に使われるオプショナル的なプロパティの集まり
 	 */
 	export interface Options {
 		interior : boolean  

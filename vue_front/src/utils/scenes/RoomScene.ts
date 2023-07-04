@@ -72,18 +72,28 @@ export default class RoomScene<T extends IBasicScene> extends BasicScene<T> {
 	}
 
 	/**
-	 * @description 壁を作る関数
+	 *  壁を作る関数
 	 * @param corner 壁のスタートポイントのベクター値(ただし、Yの値は0にならないといけない)
-	 * @param doorSpaces 
-	 * @param windowSpaces 
-	 * @returns 
+	 * @param doorSpaces  ドアーの空間情報
+	 * @param windowSpaces 窓の空間情報
+	 * @returns 壁の情報
 	 */
-	public createWall(corner: Vector3, doorSpaces?: Array<Room.DoorSpace>, windowSpaces?: Array<Room.WindowSpace>) : Room.Wall{
+	public createWall(corner: Vector3, doorSpaces: Array<Room.DoorSpace> = [], windowSpaces: Array<Room.WindowSpace> = []) : Room.Wall{
 		return {
 			corner,
 			doorSpaces,
 			windowSpaces
 		}
+	}
+
+	/**
+	 * 壁の始まりのポイントを指定するコーナーベクターを生成する関数
+	 * @param x 
+	 * @param z 
+	 * @returns 
+	 */
+	public createCorner(x: number, z: number): Vector3 {
+		return new Vector3(x, 0, z);
 	}
 	
 }

@@ -9,7 +9,7 @@ import "@babylonjs/core/Materials/standardMaterial";
 import "@babylonjs/core/Materials/Textures/Loaders/envTextureLoader";
 
 /**
- * @description 全てのシーンについた共通的な部分を集めたクラス
+ *  全てのシーンについた共通的な部分を集めたクラス
  */
 export default class BasicScene<T extends IBasicScene> {
 	scene: Scene;
@@ -52,7 +52,7 @@ export default class BasicScene<T extends IBasicScene> {
 	}
 
 	/**
-	 * @description 新しいシーンを生成してくれる関数
+	 *  新しいシーンを生成してくれる関数
 	 * @returns  {Scene} 該当シーン
 	 */
 	createScene(): Scene {
@@ -61,7 +61,7 @@ export default class BasicScene<T extends IBasicScene> {
 	}
 
 	/**
-	 * @description モデルを読み込む関数
+	 *  モデルを読み込む関数
 	 * @param {string} fileName 読み込むモデルのファイル名
 	 */
 	async loadModel(fileName : string) {

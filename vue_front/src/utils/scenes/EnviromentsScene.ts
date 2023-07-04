@@ -3,7 +3,7 @@ import { IBasicScene } from "../../types/scene.type";
 import BasicScene from "./BasicScene";
 
 /**
- * @description 部屋とか本棚とかなどの環境を調節するクラス
+ *  部屋とか本棚とかなどの環境を調節するクラス
  * @extends {BasicScene<T>}
  */
 export default class EnviromentsScene<T extends IBasicScene> extends BasicScene<T>{

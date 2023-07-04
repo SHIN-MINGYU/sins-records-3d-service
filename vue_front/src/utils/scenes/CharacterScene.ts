@@ -4,17 +4,17 @@ import BasicScene from "./BasicScene";
 import PlayerInputController from "../controller/PlayerInputController";
 
 /**
- * @description キャラクターに関するシーンに関するクラス
+ *  キャラクターに関するシーンに関するクラス
  * @extends {BasicScene<T>}
  */
 export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>{
 	/**
-	 * @description ユーザー自分自身のキャラクター情報
+	 *  ユーザー自分自身のキャラクター情報
 	 */
 	player: ISceneLoaderAsyncResult;
 	
 	/**
-	 * @description ユーザーの動作情報
+	 *  ユーザーの動作情報
 	 */
 	private _input: PlayerInputController;
 
@@ -38,7 +38,7 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 
 	// ユーザー動作変数
 	/**
-	 * @description 秒単位のdeltaTime
+	 *  秒単位のdeltaTime
 	 */
 	private _deltaTime: number = 0;
 	private _h: number;
@@ -75,14 +75,14 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 	}
 
 	/**
-	 * @description 基本キャラクターを作る関数
+	 *  基本キャラクターを作る関数
 	 */
 	async createCharacter() {
 		return await this.loadModel("character.glb"); 
 	}
 
 	/**
-	 * @description 基のカメラを削除し、ユーザーの方を追いつきながら移すカメラを生成
+	 *  基のカメラを削除し、ユーザーの方を追いつきながら移すカメラを生成
 	 */
 	private _setupPlayerCamera(): UniversalCamera {
 		// 既存のカメラを削除
@@ -165,7 +165,7 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 		this.player.meshes[0].rotationQuaternion = Quaternion.Slerp(this.player.meshes[0].rotationQuaternion!, targ, 10 * this._deltaTime);
 	}
 	/**
-	 * @description アニメションをセットする関数
+	 *  アニメションをセットする関数
 	 */
 	private _setAnimation(): void {
 		this.scene.stopAllAnimations();
@@ -177,7 +177,7 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 		this._prevAni = this._idle;
 	}
 	/**
-	 * @description フレイヤの入力値によったアニメションを決める関数
+	 *  フレイヤの入力値によったアニメションを決める関数
 	 */
 	private _animatePlayer(): void {
 		// 方向キーが押されたらアニメションを「歩き」に変える
@@ -199,7 +199,7 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 	}
 
 	/**
-	 * @description gravityによってフレイヤの動作をシーン内に繁栄してくれる関数
+	 *  gravityによってフレイヤの動作をシーン内に繁栄してくれる関数
 	 */
 	private _updateGroundDetection() : void {
 		this._deltaTime = this.scene.getEngine().getDeltaTime() / 1000.0;
@@ -207,7 +207,7 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 	}
 
 	/**
-	 * @description カメラの位置をアップデートする
+	 *  カメラの位置をアップデートする
 	 */
 	private _updateCamera(): void {
 		let centerPlayer = this.player.meshes[0].position.y + 2;
@@ -215,7 +215,7 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 	}
 
 	/**
-	 * @description レンダリングされる前に変更が入らなければならない関数の集まり
+	 *  レンダリングされる前に変更が入らなければならない関数の集まり
 	 */
 	private _beforeRenderUpdate(): void {
 		this._updateFromControl();
@@ -224,7 +224,7 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 	}
 
 	/**
-	 * @description フレイヤを基準にするカメラを生成する
+	 *  フレイヤを基準にするカメラを生成する
 	 * @returns 
 	 */
 	public activatePlayerCamera(): UniversalCamera {
