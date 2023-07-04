@@ -6,8 +6,6 @@ import type { IBasicScene } from "../../types/scene.type";
 import type Room  from "../../types/room.type";
 
 
-
-
 export default class RoomScene<T extends IBasicScene> extends BasicScene<T> {
 	private _walls : Array<Room.Wall> = []
 	private _position = []
@@ -72,28 +70,82 @@ export default class RoomScene<T extends IBasicScene> extends BasicScene<T> {
 	}
 
 	/**
-	 *  壁を作る関数
+	 * 壁の始まりのポイントを指定するコーナーベクターを生成する関数
+	 * @param x 三次空間中での横を担当する値
+	 * @param z 三次空間中での縦を担当する値
+	 * @returns 高さが0なベクター値
+	 */
+		public createCorner(x: number, z: number): Vector3 {
+			return new Vector3(x, 0, z);
+		}
+
+
+	/**
+	 * ドアーの情報を生成する関数
+	 * @param width ドアーの横の長さ
+	 * @param height ドアーの縦の長さ
+	 * @returns ドアーの情報
+	 */
+	public createDoor(width: number, height: number): Room.Door {
+		return {
+			width,height
+		}
+	} 
+
+	/**
+	 * 壁においてドアーの位置情報を生成する関数
+	 * @param door ドアー
+	 * @param left 作られたドアーが左からどのくらい離れているのかを決める値
+	 * @returns ドアーの位置情報
+	 */
+	public createDoorSpace(door: Room.Door, left: number) : Room.DoorSpace {
+		return {
+			door, left
+		}
+	}
+
+
+	/**
+	 * 窓の情報を生成する関数
+	 * @param width 窓の横の長さ
+	 * @param height ドアーの縦の長さ
+	 * @returns 窓の情報
+	 */
+	public createWindow(width: number, height: number): Room.Window {
+		return {
+			width, height
+		}
+	}
+
+	/**
+	 * 壁において窓の位置情報を生成する関数
+	 * @param window 窓
+	 * @param left 作られた窓が左からどのくらい離れているのかを決める値
+	 * @param top 作られた窓が上からどのくらい離れているのかを決める値
+	 * @returns 窓の位置情報
+	 */
+	public createWindowSpace(window: Room.Window, left: number, top: number): Room.WindowSpace {
+		return {
+			window, left, top
+		}
+		
+	}
+
+		/**
+	 *  壁を情報を生成する関数
 	 * @param corner 壁のスタートポイントのベクター値(ただし、Yの値は0にならないといけない)
 	 * @param doorSpaces  ドアーの空間情報
 	 * @param windowSpaces 窓の空間情報
 	 * @returns 壁の情報
 	 */
-	public createWall(corner: Vector3, doorSpaces: Array<Room.DoorSpace> = [], windowSpaces: Array<Room.WindowSpace> = []) : Room.Wall{
-		return {
-			corner,
-			doorSpaces,
-			windowSpaces
+		public createWall(corner: Vector3, doorSpaces: Array<Room.DoorSpace> = [], windowSpaces: Array<Room.WindowSpace> = []) : Room.Wall{
+			return {
+				corner,
+				doorSpaces,
+				windowSpaces
+			}
 		}
-	}
-
-	/**
-	 * 壁の始まりのポイントを指定するコーナーベクターを生成する関数
-	 * @param x 
-	 * @param z 
-	 * @returns 
-	 */
-	public createCorner(x: number, z: number): Vector3 {
-		return new Vector3(x, 0, z);
-	}
+	
+	
 	
 }

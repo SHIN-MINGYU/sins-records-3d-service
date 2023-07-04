@@ -23,27 +23,42 @@ namespace Room {
 		exteriorColor: Color4
 	}
 
+	/**
+	 * ドア
+	 */
 	export interface Door {
 		width: number;
 		height: number;
 	}
 
+	/**
+	 * ドアーの位置情報
+	 */
 	export interface DoorSpace {
 		door: Door;
 		left: number;
 	}
 
+	/**
+	 * 窓
+	 */
 	export interface Window {
 		width: number;
 		height: number;
 	}
 
+	/**
+	 * 窓の位置情報
+	 */
 	export interface WindowSpace {
 		window: Window;
 		left: number;
 		top: number;
 	}
 
+	/**
+	 * 壁情報
+	 */
 	export interface Wall {
 		corner: Vector3
 		doorSpaces?: Array<DoorSpace>
