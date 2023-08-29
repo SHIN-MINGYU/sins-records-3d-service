@@ -8,7 +8,7 @@ import Room from "../../types/room.type";
  * @extends {BasicScene<T>}
  */
 export default class EnviromentsScene<T extends IBasicScene> extends BasicScene<T>{
-	meshes : Array<Mesh>
+	meshes : Array<Mesh> = []
 	/**
 	 * 数字のArrayを使ってy値が0な3次元Vectorを作る
 	 * @param data 長さ2の数字Array
@@ -108,20 +108,17 @@ export default class EnviromentsScene<T extends IBasicScene> extends BasicScene<
 			const lineNormal = new Vector3(line.z, 0, -1 * line.x).normalize();
 
 			line.normalize();
-			outerData[(w + 1) % nbWalls].corner = walls[(w + 1) % nbWalls].corner.add(lineNormal.scale(ply)).add(line.scale(direction * ply / Math.tan(angle / 2)));	
+			outerData[(w + 1) % nbWalls] = {corner : walls[(w + 1) % nbWalls].corner.add(lineNormal.scale(ply)).add(line.scale(direction * ply / Math.tan(angle / 2)))};	
 			line = nextLine.clone();		
 			walls[(w + 3) % nbWalls].corner.subtractToRef(walls[(w + 2) % nbWalls].corner, nextLine);	
 		}
 
 		// 座標情報を基に壁生成
-		for (let i = 0; i <= nbWalls; i++){
+		for (let i = 0; i < nbWalls; i++){
 			const innerBase = [walls[i], walls[i + 1 >= nbWalls ? 0 : i + 1]]
 			const outerBase = [outerData[i], outerData[i + 1 >= nbWalls ? 0 : i + 1]]
-
+			
 			this.meshes.push(this.buildWall(innerBase, outerBase,{height}))
 		}
 	}
-
-
-
 }

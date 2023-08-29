@@ -1,4 +1,4 @@
-import { Color4,  Vector3, Vector4 } from "@babylonjs/core";
+import {   Vector3 } from "@babylonjs/core";
 
 namespace Room {
 	export type Corner = Vector3

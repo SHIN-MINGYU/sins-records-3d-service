@@ -241,7 +241,7 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 		const direction = this._getCameraDirection(playerPosition)
 		this._ray = new Ray(playerPosition, direction)
 
-		const hit = this.scene.pickWithRay(this._ray);
+		// const hit = this.scene.pickWithRay(this._ray);
 
 	// 	if (hit!.pickedMesh) {
 	// 	console.log(hit!.pickedMesh.name)
