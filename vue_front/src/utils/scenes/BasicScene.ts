@@ -1,7 +1,9 @@
-import { Camera, Engine, FreeCamera, HemisphericLight, Scene, SceneLoader, Vector3 } from "@babylonjs/core";
+import { Camera, Engine, FreeCamera,  HemisphericLight,  Scene, SceneLoader, Vector3 } from "@babylonjs/core";
 import { isTypeParentScene } from "../../types/scene.type";
 
 import type { ChildrenScene, ParentScene, IBasicScene } from "../../types/scene.type";
+import cannon from "cannon";
+
 // required imports
 import "@babylonjs/core/Loading/loadingScreen";
 import "@babylonjs/loaders/glTF";
@@ -20,16 +22,23 @@ export default class BasicScene<T extends IBasicScene> {
 
 		// シナリオ1．もし該当シーンが初めて作られることだとしたら
 		if (isTypeParentScene(arg)) {
-
+			window.CANNON = cannon;
 			const canvas = arg
 			// エンジン初期化
 			this.engine = new Engine(canvas as ParentScene, true)
-
 			// シーン初期化
 			this.scene = this.createScene();
+			// const gravity = new Vector3(0, -10, 0);
+			// HavokPhysics().then((hk) => {
+			// 	const havok = new HavokPlugin(true, hk);
+			// 	const bool = this.scene.enablePhysics(gravity, havok);
+			// 	console.log("physics : " , bool)
+			// });
+
 
 			// カメラ初期化(一時的なコード)
 			this.camera = new FreeCamera("testCamera", new Vector3(0, 1, 0), this.scene);
+
 			this.camera.attachControl(canvas, false)
 
 			// 光生成
@@ -64,10 +73,11 @@ export default class BasicScene<T extends IBasicScene> {
 	 *  モデルを読み込む関数
 	 * @param {string} fileName 読み込むモデルのファイル名
 	 */
-	async loadModel(fileName : string) {
-		const model = await SceneLoader.ImportMeshAsync("", "./models/", `${fileName}`);
+	async loadModel(fileName : string, scale : Vector3 = new Vector3(1,1,1)) {
+		const model = await SceneLoader.ImportMeshAsync("", "./models/", `${fileName}`, this.scene);
+		model.meshes.forEach(mesh => {
+			mesh.scaling = mesh.scaling.multiply(scale)
+		})
 		return model
 	}
-
-
 }

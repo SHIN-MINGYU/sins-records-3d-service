@@ -1,4 +1,4 @@
-import {  AnimationGroup,  Color3,  ISceneLoaderAsyncResult, Matrix, Observable,   Quaternion, Ray, RayHelper, Tools, TransformNode, UniversalCamera,  Vector3 } from "@babylonjs/core";
+import {  AnimationGroup,    ISceneLoaderAsyncResult, Matrix, Observable,   Quaternion, Ray, RayHelper, Tools, TransformNode, UniversalCamera,  Vector3 } from "@babylonjs/core";
 import { IBasicScene } from "../../types/scene.type";
 import BasicScene from "./BasicScene";
 import PlayerInputController from "../controller/PlayerInputController";
@@ -243,14 +243,14 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 
 		const hit = this.scene.pickWithRay(this._ray);
 
-		if (hit!.pickedMesh) {
-		console.log(hit!.pickedMesh.name)
-		// 캐릭터가 벽에 가려진 상태
-		console.log("가려짐")
-	} else {
-		// 벽에 가려진 상태가 아님
-		console.log("안가려짐")
-			}
+	// 	if (hit!.pickedMesh) {
+	// 	console.log(hit!.pickedMesh.name)
+	// 	// 캐릭터가 벽에 가려진 상태
+	// 	console.log("가려짐")
+	// } else {
+	// 	// 벽에 가려진 상태가 아님
+	// 	console.log("안가려짐")
+	// 		}
 	}
 
 
