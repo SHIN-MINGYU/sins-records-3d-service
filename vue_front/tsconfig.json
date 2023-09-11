@@ -15,6 +15,7 @@
     "jsx": "preserve",
     "allowJs":  true,
 
+    "esModuleInterop": true,
     /* Linting */
     "strict": true,
     "strictPropertyInitialization": false,
@@ -22,8 +23,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["node"]
+    "types": ["jest","node"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/utils/extensions/polygonMeshBuilder.prototype.js"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/utils/extensions/polygonMeshBuilder.prototype.js", "jest.setup.ts", "src/utils/scenes/BasicScene.spec.ㅓs"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -19,7 +19,6 @@ export default class BasicScene<T extends IBasicScene> {
 	camera: Camera;
 
 	constructor(arg: T) {
-
 		// シナリオ1．もし該当シーンが初めて作られることだとしたら
 		if (isTypeParentScene(arg)) {
 			window.CANNON = cannon;
@@ -28,13 +27,6 @@ export default class BasicScene<T extends IBasicScene> {
 			this.engine = new Engine(canvas as ParentScene, true)
 			// シーン初期化
 			this.scene = this.createScene();
-			// const gravity = new Vector3(0, -10, 0);
-			// HavokPhysics().then((hk) => {
-			// 	const havok = new HavokPlugin(true, hk);
-			// 	const bool = this.scene.enablePhysics(gravity, havok);
-			// 	console.log("physics : " , bool)
-			// });
-
 
 			// カメラ初期化(一時的なコード)
 			this.camera = new FreeCamera("testCamera", new Vector3(0, 1, 0), this.scene);
