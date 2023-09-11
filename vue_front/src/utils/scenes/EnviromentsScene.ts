@@ -1,4 +1,4 @@
-import {Mesh, StandardMaterial, Vector3, VertexData } from "@babylonjs/core";
+import {Mesh,  PhysicsImpostor ,StandardMaterial, Vector3, VertexData } from "@babylonjs/core";
 import { IBasicScene } from "../../types/scene.type";
 import BasicScene from "./BasicScene";
 import Room from "../../types/room.type";
@@ -72,11 +72,13 @@ export default class EnviromentsScene<T extends IBasicScene> extends BasicScene<
 		vertexData.normals = normals;
 		vertexData.uvs = uvs;
 		vertexData.applyToMesh(wallMesh)
-
+		// wallMesh.physicsImpostor = new PhysicsImpostor(wallMesh, PhysicsImpostor.BoxImpostor)
 		const material = new StandardMaterial("boxMaterial", this.scene);
 		material.alpha = 1
 		wallMesh.material = material
-
+		const imposter = new PhysicsImpostor(wallMesh, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0, friction: 0 }, this.scene)
+		imposter.setDeltaPosition(wallMesh.position)
+		wallMesh.physicsImpostor = imposter
 		return wallMesh;
 	}
 
@@ -113,12 +115,16 @@ export default class EnviromentsScene<T extends IBasicScene> extends BasicScene<
 			walls[(w + 3) % nbWalls].corner.subtractToRef(walls[(w + 2) % nbWalls].corner, nextLine);	
 		}
 
+		const house = new Mesh("house", this.scene);
+
 		// 座標情報を基に壁生成
 		for (let i = 0; i < nbWalls; i++){
 			const innerBase = [walls[i], walls[i + 1 >= nbWalls ? 0 : i + 1]]
 			const outerBase = [outerData[i], outerData[i + 1 >= nbWalls ? 0 : i + 1]]
-			
-			this.meshes.push(this.buildWall(innerBase, outerBase,{height}))
+			const wall = this.buildWall(innerBase, outerBase, { height })
+			wall.checkCollisions = true;
+			this.meshes.push(wall)
+			house.addChild(wall);
 		}
 	}
 }

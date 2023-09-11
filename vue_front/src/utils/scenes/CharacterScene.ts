@@ -1,4 +1,4 @@
-import {  AnimationGroup,    ISceneLoaderAsyncResult, Matrix, Observable,   Quaternion, Ray, RayHelper, Tools, TransformNode, UniversalCamera,  Vector3 } from "@babylonjs/core";
+import {  AnimationGroup,    ISceneLoaderAsyncResult, Matrix, Mesh, MeshBuilder, Observable,   PhysicsImpostor, Quaternion, Ray, RayHelper, Tools, TransformNode, UniversalCamera,  Vector3 } from "@babylonjs/core";
 import { IBasicScene } from "../../types/scene.type";
 import BasicScene from "./BasicScene";
 import PlayerInputController from "../controller/PlayerInputController";
@@ -12,7 +12,9 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 	 *  ユーザー自分自身のキャラクター情報
 	 */
 	player: ISceneLoaderAsyncResult;
-	
+
+	// ユーザーのcollisionsボックス
+	public mesh : Mesh
 	/**
 	 *  ユーザーの動作情報
 	 */
@@ -85,6 +87,17 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 	 */
 	async createCharacter() {
 		const character = await this.loadModel("character.glb");
+		// キャラクターのcollisionを作る
+		const characterCol = MeshBuilder.CreateBox("characterCol", { width: 2, height: 3.8, depth: 2 })
+		characterCol.position.y = 1.9
+		characterCol.visibility = 0.25
+		characterCol.physicsImpostor = new PhysicsImpostor(characterCol, PhysicsImpostor.BoxImpostor,  { mass: 0, restitution:0.75 },this.scene)
+		character.meshes.forEach(m => {
+			// 作ったcoliisionをキャラクターメッシュの親として指定し、物理法則を適応する
+			m.setParent(characterCol)
+		})
+		this.mesh = characterCol
+		this.mesh.checkCollisions = true
 		return character
 	}
 
@@ -164,8 +177,8 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 		// 二つの線形保管の間の角度
 		let angle = Math.atan2(this._input.horizontalAxis, this._input.verticalAxis) 
 		angle += this._camRoot.rotation.y;
-		let targ = Quaternion.FromEulerAngles(Math.PI, angle, Math.PI); 
-		this.player.meshes[0].rotationQuaternion = Quaternion.Slerp(this.player.meshes[0].rotationQuaternion!, targ, 10 * this._deltaTime);
+		let targ = Quaternion.FromEulerAngles(0, angle, 0); 
+		this.mesh.rotationQuaternion = Quaternion.Slerp(this.mesh.rotationQuaternion!, targ, 10 * this._deltaTime);
 	}
 	/**
 	 *  アニメションをセットする関数
@@ -206,15 +219,15 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 	 */
 	private _updateGroundDetection(): void {
 		this._deltaTime = this.scene.getEngine().getDeltaTime() / 1000.0;
-		this.player.meshes[0].moveWithCollisions(this._moveDirection.addInPlace(this._gravity));
+		this.mesh.moveWithCollisions(this._moveDirection.addInPlace(this._gravity));
 	}
 
 	/**
 	 *  カメラの位置をアップデートする
 	 */
 	private _updateCamera(): void {
-		let centerPlayer = this.player.meshes[0].position.y + 2;
-		this._camRoot.position = Vector3.Lerp(this._camRoot.position, new Vector3(this.player.meshes[0].position.x, centerPlayer, this.player.meshes[0].position.z), 0.4)
+		let centerPlayer = this.mesh.position.y + 2;
+		this._camRoot.position = Vector3.Lerp(this._camRoot.position, new Vector3(this.mesh.position.x, centerPlayer, this.mesh.position.z), 0.4)
 		this._camRoot.rotation = this._camRoot.rotation.add(new Vector3(this._input.verticalCam, this._input.horizontalCam, 0).scale(CharacterScene.CAMERA_SPEED))
 	}
 
@@ -237,7 +250,7 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 	}
 
 	private _castRay(): void{
-		const playerPosition = this.player.meshes[0].position;
+		const playerPosition = this.mesh.position;
 		const direction = this._getCameraDirection(playerPosition)
 		this._ray = new Ray(playerPosition, direction)
 

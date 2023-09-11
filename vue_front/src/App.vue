@@ -5,7 +5,8 @@ import CharacterScene from "./utils/scenes/CharacterScene";
 import BasicScene from "./utils/scenes/BasicScene";
 import HavokPhysics from "@babylonjs/havok";
 import { Inspector } from '@babylonjs/inspector';
-import { Vector3, HavokPlugin } from "@babylonjs/core";
+import {MeshBuilder } from "@babylonjs/core";
+// import { Vector3, HavokPlugin } from "@babylonjs/core";
 
 export default {
   name: "BabylonScene",
@@ -16,10 +17,10 @@ export default {
       if (bjsCanvas.value) {
 
         const basicScene = new BasicScene(bjsCanvas.value);
-        const gravity = new Vector3(0, -10, 0);
-			  HavokPhysics().then((hk) => {
-				const havok = new HavokPlugin(true, hk);
-			  basicScene.scene.enablePhysics(gravity, havok);
+
+        HavokPhysics().then((_) => {
+          
+			  basicScene.scene.enablePhysics();
    
         const scene = new EnviromentsScene(basicScene);
 
@@ -32,13 +33,12 @@ export default {
         const walls = corners.map(scene.createWall)
 
         const ply = 0.3;
-        const height = 5;
-        scene.buildHouse(walls, ply,height);
-
-        // scene.createBall();
+        const height = 10;
+          scene.buildHouse(walls, ply, height);
+        
         new CharacterScene(scene);
-        Inspector.Show(scene.scene,{overlay : true})
-
+        Inspector.Show(scene.scene, { overlay: true })
+        MeshBuilder.CreateGround("GROUND", { width: 40, height: 100 },scene.scene)
 			});
 
          
