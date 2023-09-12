@@ -22,23 +22,23 @@ export default {
           
 			  basicScene.scene.enablePhysics();
    
-        const scene = new EnviromentsScene(basicScene);
+        const enviromentScene = new EnviromentsScene(basicScene);
 
         const baseData = [[-5, 0], [5, 0], [5, 6], [2, 6], [2, 9], [-5, 9]].map(el => 
           el.map(e => e*3)
         );
 
-        const corners = baseData.map(scene.createCorner);
+        const corners = baseData.map(enviromentScene.createCorner);
 
-        const walls = corners.map(scene.createWall)
+        const walls = corners.map(enviromentScene.createWall)
 
         const ply = 0.3;
         const height = 10;
-          scene.buildHouse(walls, ply, height);
+        enviromentScene.buildHouse(walls, ply, height);
         
-        new CharacterScene(scene);
-        Inspector.Show(scene.scene, { overlay: true })
-        MeshBuilder.CreateGround("GROUND", { width: 40, height: 100 },scene.scene)
+        CharacterScene.createCharacter(enviromentScene,"character.glb")
+        Inspector.Show(enviromentScene.scene, { overlay: true })
+        MeshBuilder.CreateGround("GROUND", { width: 40, height: 100 },enviromentScene.scene)
 			});
 
          

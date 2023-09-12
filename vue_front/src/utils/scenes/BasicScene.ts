@@ -14,6 +14,7 @@ import "@babylonjs/core/Materials/Textures/Loaders/envTextureLoader";
  *  全てのシーンについた共通的な部分を集めたクラス
  */
 export default class BasicScene<T extends IBasicScene> {
+	static instance : BasicScene<IBasicScene>;
 	scene: Scene;
 	engine: Engine;
 	camera: Camera;
@@ -50,6 +51,7 @@ export default class BasicScene<T extends IBasicScene> {
 			this.scene = root.scene;
 			this.camera = root.camera
 		}
+		BasicScene.instance = this
 	}
 
 	/**
