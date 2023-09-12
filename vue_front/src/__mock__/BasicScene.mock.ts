@@ -12,7 +12,8 @@ class MockScene {
 		this.scene = scene;
 		this.engine = engine;
 		this.camera = camera;
-
+		this.scene.enablePhysics()
+		
 		// 初期化されたエンジンを通じシーンをレンダリング
 		this.engine.runRenderLoop(() => {
 			this.scene.render()
@@ -36,7 +37,7 @@ class MockScene {
 		}
 }
 
-export const createMockScene  = (): BasicScene<any> => {
+export const createMockScene = (): BasicScene<any> => {
 	const engine = new NullEngine();
 	const scene = new Scene(engine);
 

@@ -10,7 +10,7 @@ export default class PlayerInputController {
 	/**
 	 * @description 入力されたキーをBooleanとして判明するためのオブジェクト
 	 */
-	public inputMap: {[key : string] : boolean};
+	public inputMap: {[key : string] : boolean} = {};
 
 	/**
 	 * @description 左右動きの速度
