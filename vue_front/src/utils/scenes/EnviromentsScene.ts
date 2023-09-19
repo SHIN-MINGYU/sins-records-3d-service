@@ -123,8 +123,10 @@ export default class EnviromentsScene<T extends IBasicScene> extends BasicScene<
 			const outerBase = [outerData[i], outerData[i + 1 >= nbWalls ? 0 : i + 1]]
 			const wall = this.buildWall(innerBase, outerBase, { height })
 			wall.checkCollisions = true;
+			wall.position = new Vector3(1,0,-3)
 			this.meshes.push(wall)
 			house.addChild(wall);
+
 		}
 	}
 }
