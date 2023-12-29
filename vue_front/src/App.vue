@@ -5,7 +5,7 @@ import CharacterScene from "./utils/scenes/CharacterScene";
 import BasicScene from "./utils/scenes/BasicScene";
 import HavokPhysics from "@babylonjs/havok";
 import { Inspector } from '@babylonjs/inspector';
-import {MeshBuilder } from "@babylonjs/core";
+import {MeshBuilder,  } from "@babylonjs/core";
 // import { Vector3, HavokPlugin } from "@babylonjs/core";
 
 export default {
@@ -34,11 +34,13 @@ export default {
 
         const ply = 0.3;
         const height = 10;
-        enviromentScene.buildHouse(walls, ply, height);
+          enviromentScene.buildHouse(walls, ply, height);
+          enviromentScene.createTable();
+          enviromentScene.createSingleModelParent(enviromentScene.createChair);
         
         CharacterScene.createCharacter(enviromentScene,"character.glb")
         Inspector.Show(enviromentScene.scene, { overlay: true })
-        MeshBuilder.CreateGround("GROUND", { width: 40, height: 100 },enviromentScene.scene)
+           MeshBuilder.CreateGround("GROUND", { width: 40, height: 100 }, enviromentScene.scene)
 			});
 
          

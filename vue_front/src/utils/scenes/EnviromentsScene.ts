@@ -1,4 +1,4 @@
-import {Mesh,  PhysicsImpostor ,StandardMaterial, Vector3, VertexData } from "@babylonjs/core";
+import {ISceneLoaderAsyncResult, Mesh,  MeshBuilder,  PhysicsImpostor ,StandardMaterial, Vector3, VertexData } from "@babylonjs/core";
 import { IBasicScene } from "../../types/scene.type";
 import BasicScene from "./BasicScene";
 import Room from "../../types/room.type";
@@ -8,7 +8,44 @@ import Room from "../../types/room.type";
  * @extends {BasicScene<T>}
  */
 export default class EnviromentsScene<T extends IBasicScene> extends BasicScene<T>{
-	meshes : Array<Mesh> = []
+	meshes: Array<Mesh> = []
+
+	 public async createTable() {
+		 const desk = await this.loadModel("table.glb", new Vector3(1.7, 1.6, 1.7));
+		 desk.meshes.forEach(mesh => {
+			mesh.position.y = 0.3
+			mesh.position.x = -20
+			mesh.checkCollisions = true;
+		 })
+		 return desk
+	 }
+	
+	public async createChair() {
+		const chair = await this.loadModel("chair.glb", new Vector3(1.5, 1.7,1.5));
+		chair.meshes.forEach(mesh => {
+			mesh.position.y = 0.3
+			mesh.position.x = 0
+			mesh.checkCollisions = true
+		})
+		return chair
+	}
+
+	public async createSingleModelParent(createFn:  () => Promise<ISceneLoaderAsyncResult>) {
+		let pName= "", pSize;
+		
+		const model = await createFn();
+		model.meshes.forEach(mesh => {
+			pName = mesh.name;
+			const boundingBox = mesh.getBoundingInfo().boundingBox;
+			if (boundingBox.maximum.equals(Vector3.Zero()) && boundingBox.minimum.equals(Vector3.Zero())) {
+				const sizeVector = boundingBox.maximum.subtract(boundingBox.minimum)
+				console.log(sizeVector);
+			}
+		})
+
+		const parent = MeshBuilder.CreateBox("",{})
+	}
+
 	/**
 	 * 数字のArrayを使ってy値が0な3次元Vectorを作る
 	 * @param data 長さ2の数字Array

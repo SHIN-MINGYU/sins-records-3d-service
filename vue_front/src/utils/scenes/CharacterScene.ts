@@ -233,6 +233,7 @@ export default class CharacterScene<T extends IBasicScene> extends BasicScene<T>
 	 */
 	private _updateCamera(): void {
 		let centerPlayer = CharacterScene.mesh.position.y + 2;
+
 		this._camRoot.position = Vector3.Lerp(this._camRoot.position, new Vector3(CharacterScene.mesh.position.x, centerPlayer, CharacterScene.mesh.position.z), 0.4)
 		this._camRoot.rotation = this._camRoot.rotation.add(new Vector3(this._input.verticalCam, this._input.horizontalCam, 0).scale(CharacterScene.CAMERA_SPEED))
 	}
