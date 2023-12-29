@@ -10,7 +10,7 @@ export default class PlayerInputController {
 	/**
 	 * @description 入力されたキーをBooleanとして判明するためのオブジェクト
 	 */
-	public inputMap: {[key : string] : boolean};
+	public inputMap: {[key : string] : boolean} = {};
 
 	/**
 	 * @description 左右動きの速度
@@ -31,6 +31,15 @@ export default class PlayerInputController {
 	 * @description 上下動きがあるか否かを確かめるための変数
 	 */
 	public verticalAxis: number = 0;
+
+	/**
+	 * @description カメラの上下動きの速度
+	 */
+	public verticalCam = 0;
+	/**
+	 * @description カメラの左右動きの速度
+	 */
+	public horizontalCam = 0;
 
 	constructor(private _scene: Scene) {
 		// ユーザーのインプットを検知するActionManager生成
@@ -64,6 +73,17 @@ export default class PlayerInputController {
 		if (this.inputMap["ArrowLeft"]) this.go("horizontal",-1)
 		else if (this.inputMap["ArrowRight"]) this.go("horizontal",1)
 		else this.stop("horizontal")
+		
+		if (this.inputMap["w"]) this.setCameraMove("vertical", -1)
+		else if (this.inputMap["s"]) this.setCameraMove("vertical",1)
+		else this.setCameraMove("vertical", 0)
+		
+		if (this.inputMap["a"]) this.setCameraMove("horizontal", -1)
+		else if (this.inputMap["d"]) this.setCameraMove("horizontal", 1)
+		else this.setCameraMove("horizontal", 0)
+		
+		
+		
 	}
 
 	/**
@@ -79,5 +99,9 @@ export default class PlayerInputController {
 	private stop(direction: "vertical" | "horizontal") : void {
 		this[`${direction}` + "Axis"] = 0;
 		this[`${direction}`] = 0;
+	}
+
+	private setCameraMove(direction: "vertical" | "horizontal", speed : number) : void {
+		this[`${direction}` +"Cam"] = speed
 	}
 }

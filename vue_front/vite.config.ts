@@ -7,4 +7,7 @@ export default defineConfig({
     host :true
   },
   plugins: [vue()],
+  optimizeDeps: {
+    exclude : ['@babylonjs/havok']
+  }
 })
